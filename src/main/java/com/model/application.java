@@ -1,0 +1,27 @@
+package com.model;
+
+import com.storage.StorageService;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+
+import com.storage.StorageProperties;
+import com.storage.StorageService;
+@SpringBootApplication
+@EnableConfigurationProperties(StorageProperties.class)
+public class application {
+
+    public static void main(String[] args) {
+        SpringApplication.run(application.class, args);
+    }
+
+    @Bean
+    CommandLineRunner init(StorageService storageService) {
+        return (args) -> {
+            storageService.deleteAll();
+            storageService.init();
+        };
+    }
+}
